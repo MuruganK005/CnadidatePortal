@@ -1,7 +1,9 @@
 package com.CandidatePortal.Controller;
 
 import com.CandidatePortal.DTO.CandidateRegistrationDto;
+import com.CandidatePortal.DTO.LoginDTO;
 import com.CandidatePortal.Entity.Candidate;
+import com.CandidatePortal.Exception.CandidateException;
 import com.CandidatePortal.Model.Password;
 import com.CandidatePortal.Entity.VerificationToken;
 import com.CandidatePortal.Event.RegistrationEvent;
@@ -31,6 +33,13 @@ public class CandidateController {
         Candidate candidate= service.candidateSignUp(registrationDto);
         publisher.publishEvent(new RegistrationEvent(candidate,applicationUrl(request)));
         return "Sign up Successfully Done!! ";
+    }
+    @PostMapping("/login")
+    public Candidate  login(@RequestBody LoginDTO loginDTO) throws CandidateException {
+        Candidate candidate= service.login(loginDTO);
+        return candidate;
+//        publisher.publishEvent(new RegistrationEvent(candidate,applicationUrl(request)));
+//        return "LoginDTOgin Successfully Done!! ";
     }
     @GetMapping("/verifyRegistration")
     public String verifyRegistration(@RequestParam String token){

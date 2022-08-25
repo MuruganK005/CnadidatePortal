@@ -1,8 +1,10 @@
 package com.CandidatePortal.Service.Implemetation;
 
 import com.CandidatePortal.DTO.CandidateRegistrationDto;
+import com.CandidatePortal.DTO.LoginDTO;
 import com.CandidatePortal.Entity.Candidate;
 import com.CandidatePortal.Entity.VerificationToken;
+import com.CandidatePortal.Exception.CandidateException;
 
 import java.util.Optional;
 
@@ -22,9 +24,13 @@ public interface ServiceImpl {
 
     String validatePasswordResetToken(String token);
 
+    Candidate login(LoginDTO loginDTO) throws CandidateException;
+
     Optional<Candidate> getCandidateByPasswordResetToken(String token);
 
     void changePassword(Candidate candidate, String newPassword);
 
     boolean checkIfValidOldPassword(Candidate candidate, String oldPassword);
+
+//    String login(LoginDTO loginDTO);
 }

@@ -2,15 +2,18 @@ package com.CandidatePortal.Service;
 
 
 import com.CandidatePortal.DTO.CandidateRegistrationDto;
+import com.CandidatePortal.DTO.LoginDTO;
 import com.CandidatePortal.Entity.Candidate;
 import com.CandidatePortal.Entity.PasswordResetToken;
 import com.CandidatePortal.Entity.VerificationToken;
+import com.CandidatePortal.Exception.CandidateException;
 import com.CandidatePortal.Model.Password;
 import com.CandidatePortal.Repository.CandidateRepo;
 import com.CandidatePortal.Repository.PasswordResetTokenRepo;
 import com.CandidatePortal.Repository.VerificationTokenRepo;
 import com.CandidatePortal.Service.Implemetation.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,7 @@ public class CandidateService implements ServiceImpl {
 
     @Autowired
     private PasswordResetTokenRepo passwordResetTokenRepo;
+
 
     @Override
     public Candidate candidateSignUp(CandidateRegistrationDto registrationDto) {
@@ -120,6 +124,21 @@ public class CandidateService implements ServiceImpl {
     @Override
     public boolean checkIfValidOldPassword(Candidate candidate, String oldPassword) {
         return passwordEncoder.matches(oldPassword,candidate.getPassword());
+    }
+
+    @Override
+    public Candidate login(LoginDTO loginDTO) throws CandidateException {
+        Candidate candidate = repo.findByEmail(loginDTO.getEmail());
+        if (candidate !=null) {
+            boolean ismatch = passwordEncoder.matches(loginDTO.getPassword(), candidate.getPassword());
+            if (ismatch) {
+                return candidate;
+            } else {
+                throw new CandidateException(HttpStatus.BAD_REQUEST,"Invalid Credential");
+            }
+        } else {
+            throw new CandidateException(HttpStatus.BAD_REQUEST,"Invalid Credential");
+        }
     }
 }
 
