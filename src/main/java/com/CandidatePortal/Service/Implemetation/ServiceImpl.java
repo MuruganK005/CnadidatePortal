@@ -6,6 +6,7 @@ import com.CandidatePortal.Entity.Candidate;
 import com.CandidatePortal.Entity.VerificationToken;
 import com.CandidatePortal.Exception.CandidateException;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ServiceImpl {
@@ -32,5 +33,6 @@ public interface ServiceImpl {
 
     boolean checkIfValidOldPassword(Candidate candidate, String oldPassword);
 
-//    String login(LoginDTO loginDTO);
+    List<Candidate> searchByCandidateNamesAndExp(String search);
+
 }

@@ -7,7 +7,6 @@ import com.CandidatePortal.Entity.Candidate;
 import com.CandidatePortal.Entity.PasswordResetToken;
 import com.CandidatePortal.Entity.VerificationToken;
 import com.CandidatePortal.Exception.CandidateException;
-import com.CandidatePortal.Model.Password;
 import com.CandidatePortal.Repository.CandidateRepo;
 import com.CandidatePortal.Repository.PasswordResetTokenRepo;
 import com.CandidatePortal.Repository.VerificationTokenRepo;
@@ -17,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CandidateService implements ServiceImpl {
@@ -124,6 +121,12 @@ public class CandidateService implements ServiceImpl {
     @Override
     public boolean checkIfValidOldPassword(Candidate candidate, String oldPassword) {
         return passwordEncoder.matches(oldPassword,candidate.getPassword());
+    }
+
+    @Override
+    public List<Candidate> searchByCandidateNamesAndExp(String search) {
+        String[] names = search.split(",");
+        return repo.findByFirstnameAndExperience(names[0], names[1]);
     }
 
     @Override
