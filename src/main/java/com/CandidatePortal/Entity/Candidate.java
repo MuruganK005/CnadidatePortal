@@ -34,6 +34,8 @@ public class Candidate {
     private String email;
     @Column(name = "role")
     private String role;
+    @Column(name = "location")
+    private String location;
     @Column(name = "enabled")
     private boolean enabled=false;
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)

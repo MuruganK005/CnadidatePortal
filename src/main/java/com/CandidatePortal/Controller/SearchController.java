@@ -19,4 +19,9 @@ public class SearchController {
     public List<Candidate> searchNamesBased(@RequestParam(name = "search") String search){
         return service.searchByCandidateNamesAndExp(search);
     }
+    @GetMapping("/location")
+    public List<Candidate> searchByLocation(@RequestParam(name = "search")String search){
+        return service.searchByLocation(search);
+
+    }
 }

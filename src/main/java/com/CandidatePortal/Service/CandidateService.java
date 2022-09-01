@@ -45,6 +45,7 @@ public class CandidateService implements ServiceImpl {
         candidate.setRole("Candidate");
         candidate.setEmail(registrationDto.getEmail());
         candidate.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        candidate.setLocation(registrationDto.getLocation());
         repo.save(candidate);
         return candidate;
     }
@@ -127,6 +128,11 @@ public class CandidateService implements ServiceImpl {
     public List<Candidate> searchByCandidateNamesAndExp(String search) {
         String[] names = search.split(",");
         return repo.findByFirstnameAndExperience(names[0], names[1]);
+    }
+
+    @Override
+    public List<Candidate> searchByLocation(String search) {
+        return repo.findByLocation(search);
     }
 
     @Override

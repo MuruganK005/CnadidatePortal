@@ -21,5 +21,6 @@ public class CandidateRegistrationDto {
     private String password;
     private String role;
     private boolean enabled=false;
+    private String location;
 
 }

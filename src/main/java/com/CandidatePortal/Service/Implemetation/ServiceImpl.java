@@ -35,4 +35,5 @@ public interface ServiceImpl {
 
     List<Candidate> searchByCandidateNamesAndExp(String search);
 
+    List<Candidate> searchByLocation(String search);
 }
