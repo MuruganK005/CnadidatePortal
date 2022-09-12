@@ -11,6 +11,7 @@ import com.CandidatePortal.Repository.CandidateRepo;
 import com.CandidatePortal.Repository.PasswordResetTokenRepo;
 import com.CandidatePortal.Repository.VerificationTokenRepo;
 import com.CandidatePortal.Service.Implemetation.ServiceImpl;
+import com.CandidatePortal.Service.Implemetation.UrlImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class CandidateService implements ServiceImpl {
+public class CandidateService implements ServiceImpl{
 
     @Autowired
     private CandidateRepo repo;
@@ -133,6 +134,20 @@ public class CandidateService implements ServiceImpl {
     @Override
     public List<Candidate> searchByLocation(String search) {
         return repo.findByLocation(search);
+    }
+
+    @Override
+    public List<Candidate> getAllCandidate() {
+        return repo.findAll();
+    }
+
+    @Override
+    public void deleteCandidates(Long id) {
+        Optional<Candidate> candidate=repo.findById(id);
+        if (candidate.isPresent()){
+            candidate.get().setEnabled(true);
+            repo.save(candidate.get());
+        }
     }
 
     @Override

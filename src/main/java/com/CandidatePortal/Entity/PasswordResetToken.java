@@ -19,8 +19,8 @@ public class PasswordResetToken {
     private String token;
     private Date expirationTime;
 
-    @OneToOne
-    @JoinColumn(name = "candidate_id", nullable = false, foreignKey = @ForeignKey(name = "FK_Candidate_ResetPassword_token"))
+    @OneToOne(cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
     public PasswordResetToken(Candidate candidate,String token){

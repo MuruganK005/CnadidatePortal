@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,15 @@ public class CandidateController {
 
     @Autowired
     private ApplicationEventPublisher publisher;
+
+    @GetMapping("/viewCandidates")
+    public List<Candidate> getAllCandidate(){
+        return service.getAllCandidate();
+    }
+    @DeleteMapping("/deleteCandidates/{id}")
+    public void deleteCandidates(@PathVariable Long id){
+         service.deleteCandidates(id);
+    }
 
     @PostMapping("/sign-up")
     public String  candidateSignUp(@RequestBody CandidateRegistrationDto registrationDto, final HttpServletRequest request) {

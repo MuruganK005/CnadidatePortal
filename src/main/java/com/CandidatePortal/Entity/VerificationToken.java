@@ -21,7 +21,7 @@ public class VerificationToken {
     private Date expirationTime;
 
     @OneToOne
-    @JoinColumn(name = "candidate_id", nullable = false, foreignKey = @ForeignKey(name = "FK_Candidate_Verify_token"))
+    @JoinColumn(name = "candidate_id")
     private Candidate candidate;
 
     public VerificationToken(Candidate candidate,String token){

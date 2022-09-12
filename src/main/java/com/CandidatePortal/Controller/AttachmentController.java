@@ -3,6 +3,9 @@ package com.CandidatePortal.Controller;
 import com.CandidatePortal.Entity.Attachment;
 import com.CandidatePortal.Model.ResponseData;
 import com.CandidatePortal.Service.Implemetation.AttachmentService;
+import com.lowagie.text.pdf.PdfDocument;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -15,10 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class AttachmentController {
-
     @Autowired
     private AttachmentService service;
-
     @PostMapping("/upload")
     public ResponseData uploadFile(@RequestParam(name = "file")MultipartFile file) throws Exception {
         Attachment attachment=null;
@@ -30,7 +31,6 @@ public class AttachmentController {
                  .toUriString();
          return new ResponseData(attachment.getFileName(),downloadURL,file.getContentType(),file.getSize());
     }
-
     @GetMapping("/download/{fileId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileId) throws Exception {
         Attachment attachment=null;
